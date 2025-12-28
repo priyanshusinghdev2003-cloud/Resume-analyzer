@@ -1,0 +1,37 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(248, 251, 255, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Spinner */
+.spinner {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  border-top: 4px solid #2595b4;
+  border-right: 4px solid #22c55e;
+  animation: spin 0.9s linear infinite;
+}
+
+/* Text */
+.text {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

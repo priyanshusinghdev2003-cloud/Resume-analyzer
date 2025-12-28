@@ -1,36 +1,47 @@
-import Image from "next/image";
+import React from "react";
 import styles from "./home.module.css";
-import { ArrowRight, File } from "lucide-react";
-import FileInput from "../../components/FileInput";
+import HowWorks from "../../components/HowWorks";
+import Footer from "../../components/Footer";
+import Link from "next/link";
 
-function page() {
+function Page() {
   return (
-    <div className={styles.homeSection}>
-      <div className={styles.Shading} />
-      <Image
-        src="/bg.png"
-        alt="AI resume analyzer illustration"
-        width={520}
-        height={520}
-        priority
-        className={styles.bgImage}
-      />
+    <div className={styles.home}>
+      <section className={styles.hero}>
+        <div className={styles.heroBg} />
+        <div className={styles.shading} />
+        <div className={styles.heroContent}>
+          <h1>
+            Get Your Resume <span>Job-Ready</span>
+          </h1>
 
-      <div className={styles.homeContent}>
-        <h1>Get Your Resume</h1>
-        <h2>Job Ready in Seconds.</h2>
-        <p>
-          Upload your resume and job description to see your match score,
-          strengths, area for improvement, and personalized recommendation
-        </p>
-        <FileInput />
-        <button className={styles.AnalyzeButton}>
-          Analyze My Resume
-          <ArrowRight />
-        </button>
-      </div>
+          <p>
+            Upload your resume and job description to instantly get your ATS
+            match score, missing skills, and personalized improvements.
+          </p>
+
+          <div className={styles.heroActions}>
+            <Link href="/analyze">
+              <button className={styles.primaryBtn}>Analyze Resume</button>
+            </Link>
+            <span className={styles.subText}>Free • No signup required</span>
+          </div>
+        </div>
+
+        <div className={styles.curve}>
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path
+              d="M0,0 C240,100 480,120 720,90 960,60 1200,20 1440,40 L1440,0 L0,0 Z"
+              fill="#f8fafc"
+            />
+          </svg>
+        </div>
+      </section>
+
+      <HowWorks />
+      <Footer />
     </div>
   );
 }
 
-export default page;
+export default Page;

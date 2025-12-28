@@ -1,126 +1,135 @@
-.homeSection {
-  height: 100vh;
+.home {
   width: 100%;
-  position: relative;
+  min-height: 100vh;
+  background: #f8fafc;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  
-  padding: 0 6rem;
-  background: #f8fbff;
 }
 
-.Shading {
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 5%;
+}
+
+.heroBg {
   position: absolute;
   inset: 0;
-  height: 45%;
+  background-image: url("/banner_imresizer.jpg");
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.shading {
+  position: absolute;
+  inset: 0;
   background: linear-gradient(
-    180deg,
-    rgba(37, 149, 180, 0.25) 0%,
-    rgba(37, 149, 180, 0.12) 40%,
-    rgba(37, 149, 180, 0) 100%
+    90deg,
+    rgba(248, 250, 252, 0.95) 0%,
+    rgba(248, 250, 252, 0.85) 40%,
+    rgba(248, 250, 252, 0.3) 70%,
+    rgba(248, 250, 252, 0) 100%
   );
-  pointer-events: none;
   z-index: 1;
 }
 
-.bgImage {
-  position: absolute;
-  right: 20%;
-  width: 520px;
-  height: auto;
+.heroContent {
+  position: relative;
   z-index: 2;
+  max-width: 520px;
+}
+
+.heroContent h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #1f2937;
+  line-height: 1.2;
+}
+
+.heroContent h1 span {
+  color: #2595b4;
+}
+
+.heroContent p {
+  margin-top: 1.2rem;
+  font-size: 1.05rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.heroActions {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+
+.primaryBtn {
+  width: fit-content;
+  background: linear-gradient(135deg, #2595b4, #22c55e);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.primaryBtn:hover {
   opacity: 0.95;
 }
 
-.homeContent {
-  max-width: 520px;
-  z-index: 3;
+.subText {
+  font-size: 0.85rem;
+  color: #6b7280;
 }
 
-.homeContent h1 {
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: #2d2f31;
-}
 
-.homeContent h2 {
-  font-size: 2.6rem;
-  font-weight: 700;
-  color: #5c5c5c;
-  margin-bottom: 1rem;
-}
-
-.homeContent p {
-  color: #5a5a5a;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-}
-
-.homeInputContainer {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: #fff;
-  border-radius: 8px;
-  padding: 0.4rem;
-  border: 1px solid #e5e7eb;
-}
-
-.homeInputPdf {
-  position: relative;
-}
-
-.homeInputPdf input {
+.curve {
   position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.homeInputPdf button {
-  background: #3125b4;
-  color: #fff;
-  border-radius: 6px;
-  padding: 0.6rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  border: none;
-}
-
-.homeInputContainer input[type="text"] {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 0.6rem;
-  font-size: 0.95rem;
-}
-
-
-.AnalyzeButton {
-  margin-top: 1.2rem;
-  background: linear-gradient(135deg, #16cc74, #22c55e);
-  color: #fff;
+  bottom: 17px;
+  left: 0;
   width: 100%;
-  padding: 0.75rem;
-  border-radius: 8px;
-  border: none;
-  font-size: 1rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  cursor: pointer;
+  z-index: 3;
+  transform: rotateX(180deg);
 }
 
-@media (max-width: 768px) {
-    .bgImage{
-        right: 6%;
-    }
-  .homeSection {
-    padding: 0 2rem;
+.curve svg {
+  width: 100%;
+  height: 150px;
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .heroContent {
+    max-width: 90%;
+  }
+
+  .heroActions {
+    align-items: center;
+  }
+
+  .shading {
+    background: linear-gradient(
+      180deg,
+      rgba(248, 250, 252, 0.95),
+      rgba(248, 250, 252, 0.85)
+    );
+  }
+}
+
+@media (max-width: 640px) {
+  .heroContent h1 {
+    font-size: 2.2rem;
   }
 }
