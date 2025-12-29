@@ -66,7 +66,7 @@ export async function POST(req: Request) {
 
     const aiResult = await getResumeAnalyzerResult(resumeText, jobDescription);
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         resumeText,
         analysis: aiResult,
@@ -74,10 +74,17 @@ export async function POST(req: Request) {
         success: true,
         message: "Resume analysis successful",
       },
-      { status: 200 }
+      {
+        status: 200,
+      }
     );
+    response.cookies.set("hasResult", "true", {
+      path: "/",
+      maxAge: 600,
+      sameSite: "lax",
+    });
+    return response;
   } catch (err) {
-    console.error("Resume analysis failed:", err);
     return NextResponse.json(
       { message: "Resume analysis failed", success: false },
       { status: 500 }
