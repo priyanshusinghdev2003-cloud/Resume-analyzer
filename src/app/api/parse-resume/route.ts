@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       req.headers.get("x-real-ip") ||
       "unknown";
 
-    const key = `resume:${deviceId || ip}`;
+    const key = `${deviceId || ip}`;
 
     const limit = await checkLimit(key);
 

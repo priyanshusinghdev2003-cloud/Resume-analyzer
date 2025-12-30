@@ -5,10 +5,8 @@ import FileInput from "../../../components/FileInput";
 function Page() {
   return (
     <div className={styles.homeSection}>
-  
       <div className={styles.Shading} />
 
-    
       <Image
         src="/bg.png"
         alt="AI resume analyzer illustration"
@@ -18,7 +16,6 @@ function Page() {
         className={styles.bgImage}
       />
 
-   
       <div className={styles.homeContent}>
         <h1>Get Your Resume</h1>
         <h2>Job Ready in Seconds.</h2>
@@ -28,7 +25,6 @@ function Page() {
         </p>
 
         <FileInput />
-        
       </div>
     </div>
   );

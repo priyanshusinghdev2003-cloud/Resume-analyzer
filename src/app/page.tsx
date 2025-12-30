@@ -4,7 +4,7 @@ import HowWorks from "../../components/HowWorks";
 import Footer from "../../components/Footer";
 import Link from "next/link";
 
-function Page() {
+async function Page() {
   return (
     <div className={styles.home}>
       <section className={styles.hero}>

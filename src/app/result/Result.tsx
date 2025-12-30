@@ -1,13 +1,36 @@
 "use client";
 import styles from "./result.module.css";
 import { useResultStore } from "../../../store/Result.store";
-import { CheckCircle, XCircle, Lightbulb, Tag } from "lucide-react";
+import {
+  CheckCircle,
+  XCircle,
+  Lightbulb,
+  Tag,
+  AlertTriangle,
+  ArrowRight,
+} from "lucide-react";
 import Progress from "../../../components/Progress";
+import Link from "next/link";
 
 function Result() {
   const { result } = useResultStore();
 
-  if (!result) return null;
+  if (!result) {
+    return (
+      <div className={styles.fallbackContainer}>
+        <AlertTriangle size={48} color="#f59e0b" />
+        <h2>Something went wrong</h2>
+        <p>
+          We couldn’t find your resume analysis. Please try analyzing your
+          resume again.
+        </p>
+
+        <Link href="/analyze" className={styles.retryBtn}>
+          Analyze Again <ArrowRight size={16} />
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.resultContainer}>

@@ -43,7 +43,6 @@ function FileInput() {
       formData.append("jobDescription", jobDescription);
       const deviceId = await getDeviceId();
       formData.append("deviceId", deviceId);
-
       const res = await fetch("/api/parse-resume", {
         method: "POST",
         body: formData,
@@ -54,7 +53,6 @@ function FileInput() {
         setResult(data?.analysis);
         localStorage.setItem("remainingTokens", String(data.token));
         window.dispatchEvent(new Event("tokens-updated"));
-
         router.push("/result");
       }
     } catch (error) {
