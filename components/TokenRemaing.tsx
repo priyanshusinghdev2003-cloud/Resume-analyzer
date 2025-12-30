@@ -1,11 +1,14 @@
 "use client";
 
-import { Coins } from "lucide-react";
+import { ArrowBigLeft, Coins } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import styles from "./tokenRemaining.module.css";
+import { usePathname, useRouter } from "next/navigation";
 
 function TokenRemaining() {
   const [remaining, setRemaining] = useState<number>(0);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const load = () => {
@@ -24,15 +27,26 @@ function TokenRemaining() {
   }, []);
 
   return (
-    <div className={styles.tokenBadge}>
-      <Coins size={18} />
-      <span className={styles.label}>Remaining</span>
-      <span
-        className={styles.count}
-        style={{ color: remaining <= 1 ? "#ef4444" : "#22c55e" }}
-      >
-        {remaining}
-      </span>
+    <div className={styles.navContainer}>
+      {pathname !== "/" && (
+        <ArrowBigLeft
+          style={{
+            cursor: "pointer",
+            color: "#303132ff",
+          }}
+          onClick={() => router.back()}
+        />
+      )}
+      <div className={styles.tokenBadge}>
+        <Coins size={18} />
+        <span className={styles.label}>Remaining</span>
+        <span
+          className={styles.count}
+          style={{ color: remaining <= 1 ? "#ef4444" : "#22c55e" }}
+        >
+          {remaining}
+        </span>
+      </div>
     </div>
   );
 }

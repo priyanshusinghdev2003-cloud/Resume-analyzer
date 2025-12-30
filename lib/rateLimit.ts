@@ -14,3 +14,8 @@ export async function checkLimit(key: string) {
     remaining: Math.max(0, MAX_REQUESTS - count),
   };
 }
+
+export const fetchLimit = async (key: string) => {
+  const count = await redis.get(key);
+  return count;
+};
