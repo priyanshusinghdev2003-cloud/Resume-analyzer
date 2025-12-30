@@ -28,6 +28,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://skillnest-ai-nine.vercel.app/sitemap.xml",
+    sitemap: "https://resume-analyzer-kappa-two.vercel.app/sitemap.xml",
   };
 }
