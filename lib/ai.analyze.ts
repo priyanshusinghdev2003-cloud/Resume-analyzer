@@ -29,11 +29,15 @@ Job Description:
 ${jobDescription}
       `,
   });
-  const cleaned = cleanJson(text);
+  const jsonText = cleanJson(text);
+  if (!jsonText) {
+    console.error("AI raw output (no JSON found):", text);
+    return null; 
+  }
   try {
-    return JSON.parse(cleaned);
+    return JSON.parse(jsonText);
   } catch (e) {
-    console.error("AI raw output:", cleaned);
-    throw new Error("Invalid AI response format");
+    console.error("AI raw output:", jsonText);
+    return null;
   }
 };
