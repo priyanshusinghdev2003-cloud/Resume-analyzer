@@ -5,17 +5,13 @@ import { checkLimit } from "../../../../lib/rateLimit";
 
 export async function POST(req: Request) {
   try {
-    const formData = await req.formData();
-    const file = formData.get("resume") as File;
-    const jobDescription = formData.get("jobDescription") as string;
-    const deviceId = formData.get("deviceId");
-
+   const deviceId = req.headers.get("x-device-id");
     const ip =
       req.headers.get("x-forwarded-for") ||
       req.headers.get("x-real-ip") ||
       "unknown";
 
-    const key = `${deviceId || ip}`;
+    const key = deviceId || ip;
 
     const limit = await checkLimit(key);
 
@@ -27,6 +23,16 @@ export async function POST(req: Request) {
           success: false,
         },
         { status: 429 }
+      );
+    }
+    const formData = await req.formData();
+    const file = formData.get("resume") as File;
+    const jobDescription = formData.get("jobDescription") as string;
+
+    if (!file || !jobDescription) {
+      return NextResponse.json(
+        { message: "Resume and job description are required", success: false },
+        { status: 400 }
       );
     }
 

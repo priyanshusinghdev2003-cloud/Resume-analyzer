@@ -53,7 +53,11 @@ function FileInput() {
 
     const res = await fetch("/api/parse-resume", {
       method: "POST",
+      headers: {
+    "x-device-id": deviceId,
+  },
       body: formData,
+
     });
 
     const data = await res.json();
