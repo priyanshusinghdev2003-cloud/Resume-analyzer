@@ -35,33 +35,47 @@ function FileInput() {
     toast.success("Resume uploaded successfully");
   };
   const handleAnalyze = async () => {
-    if (!file) return;
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append("resume", file);
-      formData.append("jobDescription", jobDescription);
-      const deviceId = await getDeviceId();
-      formData.append("deviceId", deviceId);
-      const res = await fetch("/api/parse-resume", {
-        method: "POST",
-        body: formData,
-      });
+  if (!file) {
+    toast.error("Please upload a resume PDF");
+    return;
+  }
 
-      const data = await res.json();
-      if (data.success) {
-        setResult(data?.analysis);
-        localStorage.setItem("remainingTokens", String(data.token));
-        window.dispatchEvent(new Event("tokens-updated"));
-        router.push("/result");
-      }
-    } catch (error) {
-      console.error("Resume analysis failed:", error);
-    } finally {
-      setLoading(false);
-      setFile(null);
-      setJobDescription("");
+  setLoading(true);
+  const toastId = toast.loading("Analyzing your resume...");
+
+  try {
+    const formData = new FormData();
+    formData.append("resume", file);
+    formData.append("jobDescription", jobDescription);
+
+    const deviceId = await getDeviceId();
+    formData.append("deviceId", deviceId);
+
+    const res = await fetch("/api/parse-resume", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.success) {
+      toast.error(data.message || "Something went wrong", { id: toastId });
+      return;
     }
+
+    setResult(data.analysis);
+    localStorage.setItem("remainingTokens", String(data.token));
+    window.dispatchEvent(new Event("tokens-updated"));
+
+    toast.success("Analysis completed!", { id: toastId });
+    router.push("/result");
+
+  } catch (err) {
+    console.error(err);
+    toast.error("Network error. Please try again.", { id: toastId });
+  } finally {
+    setLoading(false);
+  }
   };
   return (
     <>
