@@ -14,14 +14,16 @@ export const getResumeAnalyzerResult = async (
 
 Analyze the resume and job description.
 
-Return JSON ONLY with:
-- matchScore (0–100)
-- strengths (array)
-- missingSkills (array)
-- improvementSuggestions (array)
-- keywordMatch (array)
-- summary (string)
-
+Return ONLY valid JSON. No explanation. No notes.
+JSON format:
+{
+  "matchScore": number,
+  "strengths": string[],
+  "missingSkills": string[],
+  "improvementSuggestions": string[],
+  "keywordMatch": string[],
+  "summary": string
+}
 Resume:
 ${resumeText}
 
