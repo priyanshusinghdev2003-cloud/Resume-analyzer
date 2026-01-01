@@ -117,6 +117,7 @@ function FileInput() {
         />
       </div>
       <button
+      type="button"
         className={styles.AnalyzeButton}
         onClick={handleAnalyze}
         disabled={loading}
