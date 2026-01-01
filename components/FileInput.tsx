@@ -76,7 +76,12 @@ function FileInput() {
 
   } catch (err) {
     console.error(err);
-    toast.error(`Network error. Please try again. ${err}`, { id: toastId });
+  const message =
+    err instanceof Error
+      ? err.message
+      : "Request failed";
+
+  toast.error(`Request failed: ${message}`, { id: toastId });
   } finally {
     setLoading(false);
   }
