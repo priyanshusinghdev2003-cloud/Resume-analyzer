@@ -17,6 +17,14 @@ function FileInput() {
   const { setResult } = useResultStore();
   const router = useRouter();
 
+   const deviceIdRef = React.useRef<string | null>(null);
+
+  React.useEffect(() => {
+    getDeviceId().then((id) => {
+      deviceIdRef.current = id;
+    });
+  }, []);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -35,6 +43,7 @@ function FileInput() {
     toast.success("Resume uploaded successfully");
   };
   const handleAnalyze = async () => {
+    if (loading) return;
   if (!file) {
     toast.error("Please upload a resume PDF");
     return;
@@ -48,43 +57,43 @@ function FileInput() {
     formData.append("resume", file);
     formData.append("jobDescription", jobDescription);
 
-    const deviceId = await getDeviceId();
-    formData.append("deviceId", deviceId);
+    const deviceId = deviceIdRef.current;
 
     const res = await fetch("/api/parse-resume", {
       method: "POST",
-      headers: {
-    "x-device-id": deviceId,
-  },
+     headers: deviceId ? { "x-device-id": deviceId } : {},
       body: formData,
 
     });
 
-    const data = await res.json();
+    let data;
+      try {
+        data = await res.json();
+      } catch {
+        toast.error("Server error. Please try again.", { id: toastId });
+        return;
+      }
 
-    if (!res.ok || !data.success) {
-      toast.error(data.message || "Something went wrong", { id: toastId });
-      return;
+      if (!res.ok || !data.success) {
+        toast.error(data.message || "Something went wrong", { id: toastId });
+        return;
+      }
+
+      setResult(data.analysis);
+      localStorage.setItem("remainingTokens", String(data.token));
+      window.dispatchEvent(new Event("tokens-updated"));
+
+      toast.success("Analysis completed!", { id: toastId });
+      router.push("/result");
+
+    } catch (err) {
+      console.error("Fetch failed:", err);
+      const message =
+        err instanceof Error ? err.message : "Request failed";
+      toast.error(`Request failed: ${message}`, { id: toastId });
+    } finally {
+      setLoading(false);
     }
-
-    setResult(data.analysis);
-    localStorage.setItem("remainingTokens", String(data.token));
-    window.dispatchEvent(new Event("tokens-updated"));
-
-    toast.success("Analysis completed!", { id: toastId });
-    router.push("/result");
-
-  } catch (err) {
-    console.error(err);
-  const message =
-    err instanceof Error
-      ? err.message
-      : "Request failed";
-
-  toast.error(`Request failed: ${message}`, { id: toastId });
-  } finally {
-    setLoading(false);
-  }
   };
   return (
     <form 
@@ -128,7 +137,7 @@ function FileInput() {
                 accept="application/pdf"
                 onChange={(e) => handleFileChange(e)}
               />
-              <button>
+              <button type="button">
                 <FileIcon />
                 Upload Resume (PDF)
               </button>
@@ -147,7 +156,6 @@ function FileInput() {
       <button
       type="submit"
         className={styles.AnalyzeButton}
-       
         disabled={loading}
       >
         Analyze My Resume
