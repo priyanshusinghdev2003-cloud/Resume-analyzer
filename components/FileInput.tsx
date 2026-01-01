@@ -78,7 +78,12 @@ function FileInput() {
   }
   };
   return (
-    <>
+    <form 
+    onSubmit={(e) => {
+    e.preventDefault();
+    handleAnalyze();
+  }}
+    >
       <div className={styles.homeInputContainer}>
         <div className={styles.homeInputPdf}>
           {file ? (
@@ -131,16 +136,16 @@ function FileInput() {
         />
       </div>
       <button
-      type="button"
+      type="submit"
         className={styles.AnalyzeButton}
-        onClick={handleAnalyze}
+       
         disabled={loading}
       >
         Analyze My Resume
         <ArrowRight />
       </button>
       {loading && <LoadingSpinner />}
-    </>
+    </form>
   );
 }
 
